@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.mycampus.mapper.PostMapper">
+
+    <insert id="insertOnePost" useGeneratedKeys="true">
+        insert into post(id, user_id, title, content, type, is_anonymous)
+        VALUES (null,#{userId},#{publishPostDTO.title},#{publishPostDTO.content},#{publishPostDTO.type},#{publishPostDTO.isAnonymous})
+    </insert>
+
+    <select id="selectByPage" resultType="com.wang.mycampus.vo.PostItemVO" >
+        select p.id, p.title, p.content, p.type, p.is_anonymous, p.like_count, p.create_time,
+               CASE WHEN p.is_anonymous = 1 THEN '匿名用户'
+                    ELSE COALESCE(u.nickname, u.username)
+               END AS authorName,
+               CASE WHEN p.is_anonymous = 1 THEN NULL
+                    ELSE u.avatar
+               END AS authorAvatar,
+               ((SELECT COUNT(*) FROM comment c WHERE c.post_id = p.id)
+                 + (SELECT COUNT(*) FROM comment_reply cr WHERE cr.post_id = p.id AND cr.status = 1)) AS commentCount
+        from post p
+        LEFT JOIN user u ON p.user_id = u.id
+        <where>
+            <if test="type != null">
+                p.type = #{type}
+            </if>
+        </where>
+        ORDER BY p.create_time DESC
+    </select>
+
+    <select id="selectPostById" resultType="com.wang.mycampus.pojo.Post">
+        SELECT * FROM post WHERE id = #{id}
+    </select>
+
+    <select id="searchPosts" resultType="com.wang.mycampus.vo.PostItemVO">
+        SELECT p.id, p.title, p.content, p.type, p.is_anonymous, p.like_count, p.create_time,
+               CASE WHEN p.is_anonymous = 1 THEN '匿名用户'
+                    ELSE COALESCE(u.nickname, u.username)
+               END AS authorName,
+               CASE WHEN p.is_anonymous = 1 THEN NULL
+                    ELSE u.avatar
+               END AS authorAvatar,
+               ((SELECT COUNT(*) FROM comment c WHERE c.post_id = p.id)
+                 + (SELECT COUNT(*) FROM comment_reply cr WHERE cr.post_id = p.id AND cr.status = 1)) AS commentCount
+        FROM post p
+        LEFT JOIN user u ON p.user_id = u.id
+        WHERE p.title LIKE CONCAT('%', #{keyword}, '%')
+           OR p.content LIKE CONCAT('%', #{keyword}, '%')
+        ORDER BY p.create_time DESC
+    </select>
+
+    <delete id="deletePostByIdAndUserId">
+        DELETE FROM post WHERE id = #{postId} AND user_id = #{userId}
+    </delete>
+
+    <insert id="insertPostLike">
+        INSERT INTO post_like(post_id, user_id) VALUES(#{postId}, #{userId})
+    </insert>
+
+    <select id="checkPostLiked" resultType="int">
+        SELECT COUNT(*) FROM post_like WHERE post_id = #{postId} AND user_id = #{userId}
+    </select>
+
+    <update id="incrementLikeCount">
+        UPDATE post SET like_count = like_count + 1 WHERE id = #{postId}
+    </update>
+
+    <select id="selectPostPublishTrend" resultType="com.wang.mycampus.vo.TrendItemVO">
+        SELECT DATE(create_time) AS date, COUNT(*) AS count
+        FROM post
+        WHERE create_time >= DATE_SUB(CURDATE(), INTERVAL #{days} - 1 DAY)
+        GROUP BY DATE(create_time)
+        ORDER BY date
+    </select>
+
+</mapper>

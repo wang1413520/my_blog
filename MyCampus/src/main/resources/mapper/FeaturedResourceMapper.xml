@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.mycampus.mapper.FeaturedResourceMapper">
+
+    <insert id="insertOne">
+        INSERT INTO featured_resource(id, resource_id, featured_title, featured_desc, cover_url, sort, status, created_by, created_at, updated_at)
+        VALUES (null, #{featuredResourceAddDTO.resourceId}, #{featuredResourceAddDTO.featuredTitle}, #{featuredResourceAddDTO.featuredDesc}, #{featuredResourceAddDTO.coverUrl}
+               , #{featuredResourceAddDTO.sort}, #{featuredResourceAddDTO.status}, #{userId}, NOW(), NOW())
+    </insert>
+
+    <!-- 更新主推资源：动态 SQL，只更新非空字段。
+         避免"停用/部分编辑"时把未传字段（如 NOT NULL 的 sort、原 featured_title 等）覆盖成 null -->
+    <update id="updateById">
+        update featured_resource
+        <set>
+            <if test="featuredResourceUpdateDTO.featuredTitle != null">featured_title = #{featuredResourceUpdateDTO.featuredTitle},</if>
+            <if test="featuredResourceUpdateDTO.featuredDesc != null">featured_desc = #{featuredResourceUpdateDTO.featuredDesc},</if>
+            <if test="featuredResourceUpdateDTO.coverUrl != null">cover_url = #{featuredResourceUpdateDTO.coverUrl},</if>
+            <if test="featuredResourceUpdateDTO.sort != null">sort = #{featuredResourceUpdateDTO.sort},</if>
+            <if test="featuredResourceUpdateDTO.status != null">status = #{featuredResourceUpdateDTO.status},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+    <delete id="deleteById">
+            delete from featured_resource where id = #{id}
+    </delete>
+
+    <!-- 前台查询已启用的主推列表（公开） -->
+    <select id="selectList" resultType="com.wang.mycampus.vo.FeaturedResourceVO">
+        SELECT
+            fr.id,
+            fr.resource_id,
+            COALESCE(fr.featured_title, r.title) AS title,
+            COALESCE(fr.featured_desc, r.description) AS description,
+            fr.cover_url,
+            r.file_type,
+            r.file_size,
+            r.download_count,
+            u.nickname AS uploader_name,
+            fr.created_at AS create_time,
+            fr.sort,
+            fr.status
+        FROM featured_resource fr
+        LEFT JOIN resource r ON fr.resource_id = r.id
+        LEFT JOIN user u ON r.user_id = u.id
+        <where>
+            fr.status = 1
+            <if test="keyword != null and keyword != ''">
+                AND (fr.featured_title LIKE CONCAT('%', #{keyword}, '%')
+                     OR fr.featured_desc LIKE CONCAT('%', #{keyword}, '%')
+                     OR r.title LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+        </where>
+        ORDER BY fr.sort DESC, fr.id DESC
+    </select>
+    <!-- 后台查询主推列表（管理用，不限制 status，支持按 status 筛选） -->
+    <select id="selectAdminList" resultType="com.wang.mycampus.vo.FeaturedResourceVO">
+        SELECT
+            fr.id,
+            fr.resource_id,
+            COALESCE(fr.featured_title, r.title) AS title,
+            COALESCE(fr.featured_desc, r.description) AS description,
+            fr.cover_url,
+            r.file_type,
+            r.file_size,
+            r.download_count,
+            u.nickname AS uploader_name,
+            fr.created_at AS create_time,
+            fr.sort,
+            fr.status
+        FROM featured_resource fr
+        LEFT JOIN resource r ON fr.resource_id = r.id
+        LEFT JOIN user u ON r.user_id = u.id
+        <where>
+            <if test="status != null">
+                AND fr.status = #{status}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                AND (fr.featured_title LIKE CONCAT('%', #{keyword}, '%')
+                     OR fr.featured_desc LIKE CONCAT('%', #{keyword}, '%')
+                     OR r.title LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+        </where>
+        ORDER BY fr.sort DESC, fr.id DESC
+    </select>
+
+    <select id="selectByResourceId" resultType="com.wang.mycampus.pojo.FeaturedResource">
+        select id, resource_id, featured_title, featured_desc, cover_url, sort, status, created_by, created_at, updated_at
+        from featured_resource where resource_id = #{resourceId}
+    </select>
+
+    <select id="selectById" resultType="com.wang.mycampus.vo.FeaturedResourceVO">
+        select
+        f.id,f.resource_id,r.title,r.description,f.cover_url,r.file_url,r.file_size,r.file_type,r.download_count,r.create_time,f.sort,f.status
+        from featured_resource as f left join resource as r on f.resource_id = r.id where f.id = #{resId}
+    </select>
+</mapper>

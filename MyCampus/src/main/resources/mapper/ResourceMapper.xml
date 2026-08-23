@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.mycampus.mapper.ResourceMapper">
+
+    <insert id="insertResource" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO resource(user_id, title, description, file_url, file_type, file_size,
+                             upload_type, batch_no, folder_name, relative_path)
+        VALUES(#{userId}, #{title}, #{description}, #{fileUrl}, #{fileType}, #{fileSize},
+               #{uploadType}, #{batchNo}, #{folderName}, #{relativePath})
+    </insert>
+
+    <select id="selectResourceById" resultType="com.wang.mycampus.pojo.Resource">
+        SELECT * FROM resource WHERE id = #{id}
+    </select>
+
+    <select id="selectResourceList" resultType="com.wang.mycampus.vo.ResourceItemVO">
+        SELECT r.id, r.title, r.description, r.file_type, r.file_size, r.download_count,
+               r.upload_type, r.folder_name, r.relative_path, r.batch_no, r.create_time,
+               u.nickname AS uploaderName
+        FROM resource r
+        LEFT JOIN user u ON r.user_id = u.id
+        <where>
+            <if test="keyword != null and keyword != ''">
+                AND r.title LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="fileType != null and fileType != ''">
+                AND r.file_type = #{fileType}
+            </if>
+        </where>
+        ORDER BY r.create_time DESC
+    </select>
+
+    <!-- 查询"我的资源"列表（按用户ID过滤 + 关键字/文件类型/上传类型筛选） -->
+    <select id="selectMyResourceList" resultType="com.wang.mycampus.vo.ResourceItemVO">
+        SELECT r.id, r.title, r.description, r.file_type, r.file_size, r.download_count,
+               r.upload_type, r.folder_name, r.relative_path, r.batch_no, r.create_time,
+               COALESCE(u.nickname, u.username) AS uploaderName
+        FROM resource r
+        LEFT JOIN user u ON r.user_id = u.id
+        <where>
+            r.user_id = #{userId}
+            <if test="keyword != null and keyword != ''">
+                AND (r.title LIKE CONCAT('%', #{keyword}, '%')
+                     OR r.description LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+            <if test="fileType != null and fileType != ''">
+                AND r.file_type = #{fileType}
+            </if>
+            <if test="uploadType != null and uploadType != ''">
+                AND r.upload_type = #{uploadType}
+            </if>
+        </where>
+        ORDER BY r.create_time DESC, r.id DESC
+    </select>
+
+    <delete id="deleteResourceById">
+        DELETE FROM resource WHERE id = #{id}
+    </delete>
+
+    <update id="incrementDownloadCount">
+        UPDATE resource SET download_count = download_count + 1 WHERE id = #{id}
+    </update>
+
+    <select id="selectResourceUploadTrend" resultType="com.wang.mycampus.vo.TrendItemVO">
+        SELECT DATE(create_time) AS date, COUNT(*) AS count
+        FROM resource
+        WHERE create_time >= DATE_SUB(CURDATE(), INTERVAL #{days} - 1 DAY)
+        GROUP BY DATE(create_time)
+        ORDER BY date
+    </select>
+
+    <select id="selectFileTypeDistribution" resultType="com.wang.mycampus.vo.FileTypeDistributionVO">
+        SELECT LOWER(file_type) AS fileType, COUNT(*) AS count
+        FROM resource
+        GROUP BY LOWER(file_type)
+        ORDER BY count DESC
+    </select>
+
+    <select id="selectDownloadTop" resultType="com.wang.mycampus.vo.HotResourceVO">
+        SELECT id, title, download_count AS downloadCount, file_type AS fileType
+        FROM resource
+        ORDER BY download_count DESC, create_time DESC
+        LIMIT #{limit}
+    </select>
+
+    <select id="selectNameByUserId" resultType="java.lang.String">
+        select nickname
+        from user left join resource on user.id = resource.user_id
+        where resource.id = #{resId};
+    </select>
+
+</mapper>

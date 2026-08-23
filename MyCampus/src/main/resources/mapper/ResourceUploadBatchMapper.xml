@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.mycampus.mapper.ResourceUploadBatchMapper">
+
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO resource_upload_batch(batch_no, user_id, folder_name, description,
+                                          total_count, success_count, fail_count, total_size, status)
+        VALUES(#{batchNo}, #{userId}, #{folderName}, #{description},
+               #{totalCount}, #{successCount}, #{failCount}, #{totalSize}, #{status})
+    </insert>
+
+    <select id="selectByBatchNo" resultType="com.wang.mycampus.pojo.ResourceUploadBatch">
+        SELECT * FROM resource_upload_batch WHERE batch_no = #{batchNo}
+    </select>
+
+    <update id="updateBatchResult">
+        UPDATE resource_upload_batch
+        SET success_count = #{successCount},
+            fail_count = #{failCount},
+            status = #{status}
+        WHERE batch_no = #{batchNo}
+    </update>
+
+    <select id="selectMaxBatchNoForToday" resultType="string">
+        SELECT MAX(batch_no) FROM resource_upload_batch
+        WHERE batch_no LIKE CONCAT(#{prefix}, '%')
+    </select>
+
+    <select id="selectBatchStats" resultType="com.wang.mycampus.vo.FolderUploadStatVO">
+        SELECT
+            COUNT(*) AS totalBatchCount,
+            IFNULL(SUM(CASE WHEN status = 1 THEN 1 ELSE 0 END), 0) AS successBatchCount,
+            IFNULL(SUM(CASE WHEN status = 2 THEN 1 ELSE 0 END), 0) AS partialSuccessBatchCount,
+            IFNULL(SUM(CASE WHEN status = 3 THEN 1 ELSE 0 END), 0) AS failedBatchCount
+        FROM resource_upload_batch
+    </select>
+
+    <select id="selectLatestBatches" resultType="com.wang.mycampus.vo.LatestUploadBatchVO">
+        SELECT
+            b.batch_no AS batchNo,
+            b.folder_name AS folderName,
+            COALESCE(u.nickname, u.username) AS uploaderName,
+            b.total_count AS totalCount,
+            b.success_count AS successCount,
+            b.fail_count AS failCount,
+            b.total_size AS totalSize,
+            b.status AS status,
+            DATE_FORMAT(b.created_at, '%Y-%m-%d %H:%i:%s') AS createTime
+        FROM resource_upload_batch b
+        LEFT JOIN user u ON b.user_id = u.id
+        ORDER BY b.created_at DESC
+        LIMIT #{limit}
+    </select>
+
+</mapper>

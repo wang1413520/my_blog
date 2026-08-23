@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.mycampus.mapper.LinkShareMapper">
+    <insert id="insert" useGeneratedKeys="true">
+        insert into link_share (title, description, link_url, source_name, tags_json, sort, status, created_by)
+        values (#{linkShare.title},#{linkShare.description},#{linkShare.linkUrl},#{linkShare.sourceName},#{linkShare.tags},#{linkShare.sort},#{linkShare.status},#{linkShare.createdBy})
+    </insert>
+
+    <update id="updateById">
+        update link_share
+        set title       = #{linkShare.title},
+            description = #{linkShare.description},
+            link_url    = #{linkShare.linkUrl},
+            source_name = #{linkShare.sourceName},
+            tags_json   = #{linkShare.tags},
+            sort        = #{linkShare.sort},
+            status      = #{linkShare.status},
+            updated_at  = NOW()
+        where id = #{linkShare.id}
+    </update>
+
+    <update id="updateStatus">
+        update link_share
+        set status     = #{status},
+            updated_at = NOW()
+        where id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        delete from link_share where id = #{id}
+    </delete>
+
+    <select id="selectList" resultType="com.wang.mycampus.vo.LinkShareVO">
+        select
+            ls.id,
+            ls.title,
+            ls.description,
+            ls.link_url,
+            ls.source_name,
+            ls.tags_json AS tags,
+            ls.sort,
+            ls.status,
+            u.nickname AS created_by_name,
+            ls.created_at AS create_time,
+            ls.updated_at AS update_time
+        from link_share ls
+        left join user u on ls.created_by = u.id
+        where (
+            #{keyword} is null
+            or ls.title like concat('%', #{keyword}, '%')
+            or ls.description like concat('%', #{keyword}, '%')
+            or ls.source_name like concat('%', #{keyword}, '%')
+            or ls.tags_json like concat('%', #{keyword}, '%')
+        )
+          and (
+            #{sourceName} is null
+            or ls.source_name = #{sourceName}
+        )
+        order by ls.sort desc, ls.created_at desc, ls.id desc
+    </select>
+
+
+    <!-- 内部查询（管理员用）：不限制 status，带创建人名称 -->
+    <select id="selectById" resultType="com.wang.mycampus.vo.LinkShareVO">
+        select ls.id,
+               ls.title,
+               ls.description,
+               ls.link_url,
+               ls.source_name,
+               ls.tags_json AS tags,
+               ls.sort,
+               ls.status,
+               u.nickname AS created_by_name,
+               ls.created_at AS create_time,
+               ls.updated_at AS update_time
+        from link_share ls
+                 left join user u on ls.created_by = u.id
+        where ls.id = #{id}
+    </select>
+
+    <!-- 公开查询（前台用）：只返回启用中的数据 -->
+    <select id="selectByIdPublic" resultType="com.wang.mycampus.vo.LinkShareVO">
+        select ls.id,
+               ls.title,
+               ls.description,
+               ls.link_url,
+               ls.source_name,
+               ls.tags_json AS tags,
+               ls.sort,
+               ls.status,
+               u.nickname AS created_by_name,
+               ls.created_at AS create_time,
+               ls.updated_at AS update_time
+        from link_share ls
+                 left join user u on ls.created_by = u.id
+        where ls.id = #{id}
+          and ls.status = 1
+    </select>
+
+    <select id="selectNoBanList" resultType="com.wang.mycampus.vo.LinkShareVO">
+        select
+            ls.id,
+            ls.title,
+            ls.description,
+            ls.link_url,
+            ls.source_name,
+            ls.tags_json AS tags,
+            ls.sort,
+            ls.status,
+            u.nickname AS created_by_name,
+            ls.created_at AS create_time,
+            ls.updated_at AS update_time
+        from link_share ls
+                 left join user u on ls.created_by = u.id
+        where (
+            #{keyword} is null
+                or ls.title like concat('%', #{keyword}, '%')
+                or ls.description like concat('%', #{keyword}, '%')
+                or ls.source_name like concat('%', #{keyword}, '%')
+                or ls.tags_json like concat('%', #{keyword}, '%')
+            )
+          and (
+            #{sourceName} is null
+                or ls.source_name = #{sourceName}
+            )
+          and ls.status = 1
+        order by ls.sort desc, ls.created_at desc, ls.id desc
+    </select>
+</mapper>

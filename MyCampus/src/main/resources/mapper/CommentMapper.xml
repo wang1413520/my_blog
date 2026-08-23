@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.mycampus.mapper.CommentMapper">
+
+    <insert id="insertComment">
+        INSERT INTO comment(post_id, user_id, content)
+        VALUES(#{postId}, #{userId}, #{content})
+    </insert>
+
+    <insert id="insertCommentWithId" useGeneratedKeys="true" keyProperty="dto.id">
+        INSERT INTO comment(post_id, user_id, content)
+        VALUES(#{dto.postId}, #{userId}, #{dto.content})
+    </insert>
+
+    <!-- 顶层评论分页查询：仅新增 userId 输出字段用于 isOwner 判断，WHERE/排序/分页逻辑完全不变 -->
+    <select id="selectCommentsByPostId" resultType="com.wang.mycampus.vo.CommentItemVO">
+        SELECT c.id, c.post_id, c.user_id AS userId, c.content, c.create_time,
+               COALESCE(u.nickname, u.username) AS authorName,
+               u.avatar AS authorAvatar
+        FROM comment c
+        LEFT JOIN user u ON c.user_id = u.id
+        WHERE c.post_id = #{postId}
+        ORDER BY c.create_time ASC
+    </select>
+
+    <delete id="deleteCommentByIdAndUserId">
+        DELETE FROM comment WHERE id = #{commentId} AND user_id = #{userId}
+    </delete>
+
+    <delete id="deleteCommentById">
+        DELETE FROM comment WHERE id = #{commentId}
+    </delete>
+
+    <!-- ==================== 楼中楼（comment_reply 表）==================== -->
+
+    <insert id="insertCommentReply" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO comment_reply(post_id, root_comment_id, parent_id, user_id, reply_to_user_id, content, status)
+        VALUES(#{postId}, #{rootCommentId}, #{parentId}, #{userId}, #{replyToUserId}, #{content}, 1)
+    </insert>
+
+    <!-- 一次 IN 查询带回全部回复：JOIN 作者 + 被@用户，避免 N+1；create_time ASC 楼层顺序 -->
+    <select id="selectRepliesByPostIdAndRootIds" resultType="com.wang.mycampus.vo.CommentReplyItemVO">
+        SELECT cr.id, cr.post_id, cr.root_comment_id, cr.parent_id,
+               cr.user_id AS userId, cr.reply_to_user_id, cr.content,
+               DATE_FORMAT(cr.create_time, '%Y-%m-%d %H:%i:%s') AS createTime,
+               COALESCE(au.nickname, au.username) AS authorName,
+               au.avatar AS authorAvatar,
+               COALESCE(ru.nickname, ru.username) AS replyToUserName
+        FROM comment_reply cr
+        LEFT JOIN user au ON cr.user_id = au.id
+        LEFT JOIN user ru ON cr.reply_to_user_id = ru.id
+        WHERE cr.post_id = #{postId}
+          AND cr.root_comment_id IN
+          <foreach collection="rootIds" item="rid" open="(" separator="," close=")">
+              #{rid}
+          </foreach>
+          AND cr.status = 1
+        ORDER BY cr.create_time ASC
+    </select>
+
+    <update id="deleteCommentReplyByIdAndUserId">
+        UPDATE comment_reply SET status = 0
+        WHERE id = #{replyId} AND user_id = #{userId}
+    </update>
+
+    <update id="deleteCommentReplyById">
+        UPDATE comment_reply SET status = 0
+        WHERE id = #{replyId}
+    </update>
+
+    <delete id="deleteRepliesByRootCommentId">
+        DELETE FROM comment_reply WHERE root_comment_id = #{rootCommentId}
+    </delete>
+
+</mapper>

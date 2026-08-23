@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.mycampus.mapper.MemoMapper">
+
+    <!-- 查询当前用户的备忘录列表 -->
+    <select id="selectListByUserId" resultType="com.wang.mycampus.pojo.Memo">
+        SELECT id, user_id, content, status, is_pinned, create_time, update_time
+        FROM memo
+        WHERE user_id = #{userId}
+        ORDER BY is_pinned DESC, status ASC, update_time DESC
+    </select>
+
+    <!-- 根据ID和用户ID查询单条 -->
+    <select id="selectByIdAndUserId" resultType="com.wang.mycampus.pojo.Memo">
+        SELECT id, user_id, content, status, is_pinned, create_time, update_time
+        FROM memo
+        WHERE id = #{id} AND user_id = #{userId}
+    </select>
+
+    <!-- 新增备忘录 -->
+    <insert id="insertMemo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO memo(user_id, content, status, is_pinned, create_time, update_time)
+        VALUES (#{memo.userId}, #{memo.content}, #{memo.status}, #{memo.isPinned}, NOW(), NOW())
+    </insert>
+
+    <!-- 修改备忘录内容 -->
+    <update id="updateContent">
+        UPDATE memo
+        SET content = #{content}, update_time = NOW()
+        WHERE id = #{id} AND user_id = #{userId}
+    </update>
+
+    <!-- 修改完成状态 -->
+    <update id="updateStatus">
+        UPDATE memo
+        SET status = #{status}, update_time = NOW()
+        WHERE id = #{id} AND user_id = #{userId}
+    </update>
+
+    <!-- 修改置顶状态 -->
+    <update id="updatePinned">
+        UPDATE memo
+        SET is_pinned = #{isPinned}, update_time = NOW()
+        WHERE id = #{id} AND user_id = #{userId}
+    </update>
+
+    <!-- 删除备忘录 -->
+    <delete id="deleteByIdAndUserId">
+        DELETE FROM memo
+        WHERE id = #{id} AND user_id = #{userId}
+    </delete>
+
+</mapper>

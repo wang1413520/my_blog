@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.mycampus.mapper.UserProfileDetailMapper">
+
+    <!-- 根据用户ID查询资料详情 -->
+    <select id="selectByUserId" resultType="com.wang.mycampus.pojo.UserProfileDetail">
+        SELECT id, user_id, real_name, gender, birthday, phone, email,
+               school, college, major, grade, location, bio,
+               created_at, updated_at
+        FROM user_profile_detail
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- 插入资料（首次保存） -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="entity.id">
+        INSERT INTO user_profile_detail(
+            user_id, real_name, gender, birthday, phone, email,
+            school, college, major, grade, location, bio,
+            created_at, updated_at
+        ) VALUES (
+            #{entity.userId}, #{entity.realName}, #{entity.gender}, #{entity.birthday},
+            #{entity.phone}, #{entity.email}, #{entity.school}, #{entity.college},
+            #{entity.major}, #{entity.grade}, #{entity.location}, #{entity.bio},
+            NOW(), NOW()
+        )
+    </insert>
+
+    <!-- 根据用户ID更新资料 -->
+    <update id="updateByUserId">
+        UPDATE user_profile_detail
+        SET real_name = #{entity.realName},
+            gender    = #{entity.gender},
+            birthday  = #{entity.birthday},
+            phone     = #{entity.phone},
+            email     = #{entity.email},
+            school    = #{entity.school},
+            college   = #{entity.college},
+            major     = #{entity.major},
+            grade     = #{entity.grade},
+            location  = #{entity.location},
+            bio       = #{entity.bio},
+            updated_at = NOW()
+        WHERE user_id = #{entity.userId}
+    </update>
+
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.mycampus.mapper.ConvertRecordMapper">
+
+    <insert id="insertConvertRecord" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO convert_record(user_id, source_name, source_type, target_type, status, source_url, file_size)
+        VALUES(#{userId}, #{sourceName}, #{sourceType}, #{targetType}, #{status}, #{sourceUrl}, #{fileSize})
+    </insert>
+
+    <select id="selectById" resultType="com.wang.mycampus.pojo.ConvertRecord">
+        SELECT * FROM convert_record WHERE id = #{id}
+    </select>
+
+    <select id="selectByUserId" resultType="com.wang.mycampus.pojo.ConvertRecord">
+        SELECT * FROM convert_record
+        WHERE user_id = #{userId}
+        ORDER BY created_at DESC
+    </select>
+
+    <update id="updateStatus">
+        UPDATE convert_record
+        SET status = #{status},
+            result_url = #{resultUrl},
+            error_msg = #{errorMsg}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM convert_record WHERE id = #{id}
+    </delete>
+
+</mapper>

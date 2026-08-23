@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.mycampus.mapper.UserMapper">
+
+    <select id="selectUser" resultType="com.wang.mycampus.vo.LoginVO">
+        select id, username, password, nickname, avatar, role from user where username = #{username} and password = #{password}
+    </select>
+
+    <update id="updateUserBaseInfo">
+        update user set nickname = #{updateUserDTO.nickname}, avatar = #{updateUserDTO.avatar} where id = #{userId}
+    </update>
+
+    <select id="selectUserRegisterTrend" resultType="com.wang.mycampus.vo.TrendItemVO">
+        SELECT DATE(create_time) AS date, COUNT(*) AS count
+        FROM user
+        WHERE create_time >= DATE_SUB(CURDATE(), INTERVAL #{days} - 1 DAY)
+        GROUP BY DATE(create_time)
+        ORDER BY date
+    </select>
+
+</mapper>
