@@ -14,10 +14,24 @@
 - **公告板**：公告发布与展示
 - **链接分享**：外链分享管理
 - **后台管理**：首页数据仪表盘（趋势、热门资源、文件类型分布等）
-- **前端界面**：Vue 3 + Element Plus 响应式界面，ECharts 图表，支持移动端适配
 - 权限控制：自定义注解 `@RequireLogin` / `@RequireAdmin` + 拦截器统一鉴权
 
+## 🌐 前端界面（qianduan-campus）
+
+基于 **Vue 3 + Element Plus** 的单页应用，响应式布局，支持移动端适配。
+
+| 模块 | 页面 |
+|---|---|
+| **首页** | 今日卡片、备忘录快捷入口、木鱼组件、最新文章 |
+| **校园墙** | 帖子列表、帖子详情（楼中楼评论）、发布帖子、点赞、搜索 |
+| **资源中心** | 资源列表、单文件/文件夹上传、下载、链接分享管理 |
+| **小工具箱** | 文件转换中心、Base64 编解码、JSON/YAML 互转、Markdown/HTML、时间戳转换、颜色格式转换、转换历史 |
+| **我的** | 个人资料、我的资源、修改密码 |
+| **后台管理** | 数据仪表盘（ECharts 趋势/热门资源/文件类型分布）、公告管理 |
+
 ## 🛠 技术栈
+
+### 后端
 
 | 类别 | 技术 |
 |---|---|
@@ -29,6 +43,19 @@
 | 文档处理 | Apache POI、PDFBox、Thumbnailator、flexmark |
 | 构建 | Maven、Java 17 |
 
+### 前端
+
+| 类别 | 技术 |
+|---|---|
+| 框架 | Vue 3、Vite 8 |
+| UI 组件库 | Element Plus |
+| 图表 | ECharts |
+| 状态管理 | Pinia |
+| 路由 | Vue Router |
+| HTTP | Axios |
+| 数据处理 | marked（Markdown 渲染）、turndown（HTML→MD）、js-yaml |
+| 构建 | npm / Vite |
+
 ## 📁 目录结构
 
 ```
@@ -36,6 +63,19 @@ Campus/
 ├── README.md
 ├── .gitignore
 ├── qianduan-campus/          # 前端项目（Vue 3 + Vite）
+│   ├── src/
+│   │   ├── api/              # API 接口封装（user/post/comment/resource/memo/admin）
+│   │   ├── views/            # 页面（Home/Post/Resource/Toolbox/Admin/Profile/Login）
+│   │   ├── components/       # 公共组件
+│   │   ├── router/           # 路由配置
+│   │   ├── store/            # Pinia 状态管理（用户 token 等）
+│   │   ├── utils/            # 工具函数（含 axios 封装 request.js）
+│   │   ├── composables/      # Vue 组合式函数
+│   │   └── assets/           # 静态资源
+│   ├── public/               # 公共静态文件
+│   ├── index.html
+│   ├── vite.config.js        # Vite 配置（/api 代理到 8080）
+│   └── 前端项目说明.md
 └── MyCampus/                 # 后端项目（Maven）
     ├── pom.xml
     ├── docs/                 # 开发文档 / 教程 / 踩坑记录
