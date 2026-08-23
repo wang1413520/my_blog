@@ -1,0 +1,35 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgDocx" x1="60" y1="52" x2="448" y2="458" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D7FFF3"/>
+      <stop offset="1" stop-color="#5FD2B5"/>
+    </linearGradient>
+    <linearGradient id="paperDocx" x1="143" y1="90" x2="354" y2="392" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#F5FFFC"/>
+    </linearGradient>
+    <linearGradient id="badgeDocx" x1="122" y1="296" x2="388" y2="390" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34B99B"/>
+      <stop offset="1" stop-color="#14896F"/>
+    </linearGradient>
+    <filter id="shadowDocx" x="108" y="72" width="296" height="354" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#0D6E58" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+
+  <rect x="32" y="32" width="448" height="448" rx="84" fill="url(#bgDocx)"/>
+  <circle cx="122" cy="140" r="18" fill="#F0FFF9" fill-opacity="0.75"/>
+  <rect x="380" y="120" width="32" height="32" rx="11" transform="rotate(18 380 120)" fill="#D6FFF3" fill-opacity="0.72"/>
+  <path d="M108 358L115 371L130 374L119 385L121 399L108 392L95 399L97 385L86 374L101 371L108 358Z" fill="#E3FFF7" fill-opacity="0.58"/>
+  <path d="M96 374C116.435 374 133 357.435 133 337C133 316.565 116.435 300 96 300C75.5655 300 59 316.565 59 337C59 357.435 75.5655 374 96 374Z" fill="#EFFFF8" fill-opacity="0.52"/>
+  <g filter="url(#shadowDocx)">
+    <path d="M140 108C140 94.7452 150.745 84 164 84H291.804C298.171 84 304.275 86.5286 308.776 91.0294L371.971 154.225C376.471 158.725 379 164.829 379 171.196V370C379 383.255 368.255 394 355 394H164C150.745 394 140 383.255 140 370V108Z" fill="url(#paperDocx)"/>
+    <path d="M300 84V144C300 157.255 310.745 168 324 168H379" fill="#D8FFF3"/>
+    <path d="M300 84V144C300 157.255 310.745 168 324 168H379" stroke="#B6F0E0" stroke-width="10" stroke-linejoin="round"/>
+    <rect x="174" y="178" width="150" height="18" rx="9" fill="#CFF7EB"/>
+    <rect x="174" y="214" width="128" height="18" rx="9" fill="#DDFBF3"/>
+    <rect x="174" y="250" width="138" height="18" rx="9" fill="#DDFBF3"/>
+    <path d="M154 338C154 314.804 172.804 296 196 296H316C339.196 296 358 314.804 358 338C358 361.196 339.196 380 316 380H196C172.804 380 154 361.196 154 338Z" fill="url(#badgeDocx)"/>
+  </g>
+  <text x="256" y="359" text-anchor="middle" fill="white" font-family="Arial, 'Segoe UI', sans-serif" font-size="48" font-weight="700" letter-spacing="2">DOCX</text>
+</svg>

@@ -1,0 +1,35 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGen" x1="64" y1="48" x2="448" y2="464" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E9EFF5"/>
+      <stop offset="1" stop-color="#AFC0D0"/>
+    </linearGradient>
+    <linearGradient id="paperGen" x1="134" y1="96" x2="355" y2="388" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#F2F6FA"/>
+    </linearGradient>
+    <linearGradient id="sealGen" x1="126" y1="302" x2="386" y2="392" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#9FB0C1"/>
+      <stop offset="1" stop-color="#6C8294"/>
+    </linearGradient>
+    <filter id="shadowGen" x="108" y="76" width="296" height="346" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#4A5F73" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <rect x="32" y="32" width="448" height="448" rx="84" fill="url(#bgGen)"/>
+  <circle cx="112" cy="136" r="18" fill="#F4F8FB" fill-opacity="0.8"/>
+  <rect x="374" y="330" width="30" height="30" rx="10" transform="rotate(22 374 330)" fill="#D6E0E9" fill-opacity="0.7"/>
+  <path d="M104 364L110 376L124 378L114 388L116 401L104 394L92 401L94 388L84 378L98 376L104 364Z" fill="#DCE5ED" fill-opacity="0.6"/>
+  <path d="M362 110V156C362 172.569 375.431 186 392 186H406" stroke="#D8E1EA" stroke-width="18" stroke-linecap="round"/>
+
+  <g filter="url(#shadowGen)">
+    <path d="M138 108C138 94.7452 148.745 84 162 84H287.206C293.572 84 299.677 86.5286 304.178 91.0294L371.971 158.822C376.471 163.323 379 169.428 379 175.794V370C379 383.255 368.255 394 355 394H162C148.745 394 138 383.255 138 370V108Z" fill="url(#paperGen)"/>
+    <path d="M299 84V146C299 159.255 309.745 170 323 170H379" fill="#CBD7E2"/>
+    <path d="M299 84V146C299 159.255 309.745 170 323 170H379" stroke="#B9C6D2" stroke-width="10" stroke-linejoin="round"/>
+    <rect x="126" y="300" width="260" height="86" rx="30" fill="url(#sealGen)"/>
+    <path d="M176 191H302" stroke="#D8E1EA" stroke-width="16" stroke-linecap="round"/>
+    <path d="M186 324H326" stroke="white" stroke-width="14" stroke-linecap="round"/>
+    <path d="M186 344H292" stroke="white" stroke-width="14" stroke-linecap="round"/>
+  </g>
+</svg>

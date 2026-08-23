@@ -1,0 +1,30 @@
+{
+  "name": "qianduan-campus",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:mobile": "vite --host 0.0.0.0 --port 4173",
+    "build": "vite build",
+    "preview": "vite preview",
+    "preview:mobile": "vite preview --host 0.0.0.0 --port 4173"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "@moonshot-ai/kimi-code": "^0.29.1",
+    "axios": "^1.6.0",
+    "echarts": "^6.1.0",
+    "element-plus": "^2.4.4",
+    "js-yaml": "^5.1.0",
+    "marked": "^18.0.5",
+    "pinia": "^2.1.7",
+    "turndown": "^7.2.4",
+    "vue": "^3.5.34",
+    "vue-router": "^4.2.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.6",
+    "vite": "^8.0.12"
+  }
+}

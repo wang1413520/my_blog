@@ -1,0 +1,30 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgFolder" x1="64" y1="56" x2="448" y2="456" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF4CF"/>
+      <stop offset="1" stop-color="#FFD86C"/>
+    </linearGradient>
+    <linearGradient id="tabFolder" x1="120" y1="118" x2="245" y2="196" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFE89B"/>
+      <stop offset="1" stop-color="#FFC84D"/>
+    </linearGradient>
+    <linearGradient id="bodyFolder" x1="86" y1="182" x2="428" y2="404" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFD45A"/>
+      <stop offset="1" stop-color="#F4AE23"/>
+    </linearGradient>
+    <filter id="shadowFolder" x="56" y="64" width="400" height="372" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#B77B00" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+
+  <rect x="32" y="32" width="448" height="448" rx="84" fill="url(#bgFolder)"/>
+  <circle cx="118" cy="118" r="18" fill="#FFF8DD" fill-opacity="0.75"/>
+  <rect x="106" y="352" width="34" height="34" rx="12" transform="rotate(-18 106 352)" fill="#FFE9A7" fill-opacity="0.7"/>
+  <path d="M380 356L387 370L402 373L391 384L393 399L380 392L367 399L369 384L358 373L373 370L380 356Z" fill="#FFF0BA" fill-opacity="0.55"/>
+  <circle cx="404" cy="128" r="28" fill="#FFF6D7" fill-opacity="0.75"/>
+  <g filter="url(#shadowFolder)">
+    <path d="M98 174C98 154.118 114.118 138 134 138H210.359C224.366 138 237.191 145.895 243.518 158.406L252.482 176.094C258.809 188.605 271.634 196.5 285.641 196.5H378C397.882 196.5 414 212.618 414 232.5V258H98V174Z" fill="url(#tabFolder)"/>
+    <path d="M86 247C86 227.118 102.118 211 122 211H390C409.882 211 426 227.118 426 247V336C426 375.765 393.765 408 354 408H158C118.235 408 86 375.765 86 336V247Z" fill="url(#bodyFolder)"/>
+    <path d="M110 264C110 250.745 120.745 240 134 240H379C392.255 240 403 250.745 403 264C403 277.255 392.255 288 379 288H134C120.745 288 110 277.255 110 264Z" fill="#FFE493" fill-opacity="0.9"/>
+  </g>
+</svg>

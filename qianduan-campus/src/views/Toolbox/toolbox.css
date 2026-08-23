@@ -1,0 +1,139 @@
+.tool-page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tool-shell {
+  border-radius: 28px;
+  border: 1px solid rgba(208, 228, 245, 0.88);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(244, 250, 255, 0.9));
+  box-shadow: 0 18px 36px rgba(171, 201, 227, 0.14);
+}
+
+.tool-header {
+  margin-bottom: 20px;
+}
+
+.tool-title {
+  margin: 0 0 10px;
+  color: #1f2a36;
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.tool-desc {
+  margin: 0;
+  color: #647689;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.tool-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.tool-panels.single-column {
+  grid-template-columns: 1fr;
+}
+
+.tool-card {
+  border-radius: 22px;
+  border: 1px solid rgba(210, 230, 246, 0.88);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(242, 248, 255, 0.92));
+  box-shadow: 0 14px 28px rgba(179, 206, 229, 0.12);
+  padding: 22px;
+}
+
+.field-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.field-label {
+  color: #334457;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.result-box {
+  margin-top: 20px;
+  border-radius: 18px;
+  border: 1px solid rgba(212, 231, 246, 0.88);
+  background: rgba(255, 255, 255, 0.76);
+  padding: 18px;
+}
+
+.result-label {
+  margin: 0 0 10px;
+  color: #6d8297;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.result-value {
+  margin: 0;
+  color: #1f2a36;
+  font-size: 15px;
+  line-height: 1.8;
+  word-break: break-all;
+}
+
+.tool-alert {
+  margin-top: 18px;
+}
+
+.tool-page :deep(.el-input__wrapper),
+.tool-page :deep(.el-textarea__inner),
+.tool-page :deep(.el-select__wrapper) {
+  border-radius: 16px;
+}
+
+@media (max-width: 900px) {
+  .tool-panels {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .tool-title {
+    font-size: 24px;
+  }
+
+  .tool-desc {
+    font-size: 14px;
+  }
+
+  .tool-card {
+    padding: 16px;
+  }
+
+  .tool-header {
+    margin-bottom: 16px;
+  }
+
+  .button-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .button-row :deep(.el-button) {
+    width: 100%;
+    margin-left: 0 !important;
+  }
+
+  .tool-card :deep(.el-select) {
+    width: 100%;
+  }
+}

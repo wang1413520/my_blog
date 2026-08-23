@@ -1,0 +1,37 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgPdf" x1="64" y1="48" x2="448" y2="464" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFD9D0"/>
+      <stop offset="1" stop-color="#FF8E74"/>
+    </linearGradient>
+    <linearGradient id="paperPdf" x1="134" y1="96" x2="355" y2="388" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#FFF6F2"/>
+    </linearGradient>
+    <linearGradient id="sealPdf" x1="126" y1="302" x2="386" y2="392" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF7A63"/>
+      <stop offset="1" stop-color="#EB4A36"/>
+    </linearGradient>
+    <filter id="shadowPdf" x="108" y="76" width="296" height="346" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#B73B2A" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+
+  <rect x="32" y="32" width="448" height="448" rx="84" fill="url(#bgPdf)"/>
+  <circle cx="112" cy="136" r="18" fill="#FFE9E3" fill-opacity="0.78"/>
+  <rect x="374" y="330" width="30" height="30" rx="10" transform="rotate(22 374 330)" fill="#FFD0C6" fill-opacity="0.7"/>
+  <path d="M104 364L110 376L124 378L114 388L116 401L104 394L92 401L94 388L84 378L98 376L104 364Z" fill="#FFD8D0" fill-opacity="0.6"/>
+  <path d="M362 110V156C362 172.569 375.431 186 392 186H406" stroke="#FFD5CB" stroke-width="18" stroke-linecap="round"/>
+  <g filter="url(#shadowPdf)">
+    <path d="M138 108C138 94.7452 148.745 84 162 84H287.206C293.572 84 299.677 86.5286 304.178 91.0294L371.971 158.822C376.471 163.323 379 169.428 379 175.794V370C379 383.255 368.255 394 355 394H162C148.745 394 138 383.255 138 370V108Z" fill="url(#paperPdf)"/>
+    <path d="M299 84V146C299 159.255 309.745 170 323 170H379" fill="#FFD8D0"/>
+    <path d="M299 84V146C299 159.255 309.745 170 323 170H379" stroke="#F6B4A7" stroke-width="10" stroke-linejoin="round"/>
+    <rect x="126" y="300" width="260" height="86" rx="30" fill="url(#sealPdf)"/>
+    <path d="M169 191H306" stroke="#FFD8D0" stroke-width="16" stroke-linecap="round"/>
+    <path d="M169 229H332" stroke="#FFD8D0" stroke-width="16" stroke-linecap="round"/>
+    <path d="M169 267H282" stroke="#FFD8D0" stroke-width="16" stroke-linecap="round"/>
+  </g>
+  <path d="M188.5 359V327H202.82C207.62 327 211.273 328.013 213.78 330.04C216.287 332.067 217.54 334.933 217.54 338.64C217.54 342.373 216.3 345.267 213.82 347.32C211.367 349.347 207.793 350.36 203.1 350.36H196.46V359H188.5ZM196.46 344.08H202.18C205.14 344.08 207.26 343.6 208.54 342.64C209.82 341.653 210.46 340.333 210.46 338.68C210.46 337.027 209.82 335.72 208.54 334.76C207.287 333.8 205.26 333.32 202.46 333.32H196.46V344.08Z" fill="white"/>
+  <path d="M223.337 359V327H236.937C242.91 327 247.524 328.413 250.777 331.24C254.03 334.04 255.657 338.107 255.657 343.44C255.657 348.773 254.03 352.853 250.777 355.68C247.524 358.493 242.91 359.9 236.937 359.9L223.337 359ZM231.297 353.44H236.417C240.23 353.44 243.137 352.573 245.137 350.84C247.164 349.08 248.177 346.613 248.177 343.44C248.177 340.293 247.164 337.853 245.137 336.12C243.137 334.36 240.23 333.48 236.417 333.48H231.297V353.44Z" fill="white"/>
+  <path d="M261.648 359V327H282.448V333.44H269.608V340.44H280.928V346.64H269.608V359H261.648Z" fill="white"/>
+</svg>

@@ -1,8 +1,8 @@
-# MyCampus 校园平台后端
+# MyCampus 校园平台
 
-一个基于 **Spring Boot 3** 的校园综合服务后端，包含校园墙（帖子/评论）、资源管理（阿里云 OSS 上传）、小工具箱（文档格式转换）、备忘录、公告板、后台管理等模块。
+校园综合服务平台，由 **Spring Boot 3 后端** 与 **Vue 3 前端** 组成，功能涵盖校园墙（帖子/评论）、资源管理（阿里云 OSS 上传）、小工具箱（文档格式转换）、备忘录、公告板、后台管理仪表盘等。
 
-> 前端代码与更多开发文档见下方 [文档](#文档)。
+> 详细开发文档见下方 [文档](#文档)。
 
 ## ✨ 功能特性
 
@@ -14,6 +14,7 @@
 - **公告板**：公告发布与展示
 - **链接分享**：外链分享管理
 - **后台管理**：首页数据仪表盘（趋势、热门资源、文件类型分布等）
+- **前端界面**：Vue 3 + Element Plus 响应式界面，ECharts 图表，支持移动端适配
 - 权限控制：自定义注解 `@RequireLogin` / `@RequireAdmin` + 拦截器统一鉴权
 
 ## 🛠 技术栈
@@ -34,6 +35,7 @@
 Campus/
 ├── README.md
 ├── .gitignore
+├── qianduan-campus/          # 前端项目（Vue 3 + Vite）
 └── MyCampus/                 # 后端项目（Maven）
     ├── pom.xml
     ├── docs/                 # 开发文档 / 教程 / 踩坑记录
@@ -108,6 +110,17 @@ java -jar target/MyCampus-0.0.1-SNAPSHOT.jar
 
 默认端口 `8080`，接口前缀 `/api`。跨域已配置为允许所有来源（开发环境）。
 
+### 4. 启动前端
+
+```bash
+cd qianduan-campus
+npm install        # 安装依赖
+npm run dev        # 开发模式（默认 5173 端口，/api 自动代理到 8080 后端）
+```
+
+> 移动端预览：`npm run dev:mobile`（端口 4173）
+> 环境变量：`VITE_API_BASE_URL` 指定 API 请求前缀（默认 `/api`，经 Vite 代理转发到后端，见 `vite.config.js`）
+
 ## ☁️ 生产部署
 
 使用生产配置启动（数据库 / OSS 信息全部走环境变量，不打印 SQL）：
@@ -134,6 +147,8 @@ java -jar MyCampus-0.0.1-SNAPSHOT.jar
 - [评论楼中楼前后端开发文档](MyCampus/docs/评论楼中楼前后端开发文档.md)
 - [小工具箱后端开发文档](MyCampus/docs/小工具箱后端开发文档.md)
 - 更多：公告板、备忘录、我的资料、资源模块、后台管理、BUG 记录等
+
+前端说明见 [前端项目说明](qianduan-campus/前端项目说明.md)。
 
 ## 📄 License
 

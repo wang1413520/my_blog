@@ -1,0 +1,34 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgDoc" x1="58" y1="48" x2="446" y2="460" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D9EDFF"/>
+      <stop offset="1" stop-color="#6CB3FF"/>
+    </linearGradient>
+    <linearGradient id="paperDoc" x1="142" y1="92" x2="349" y2="391" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#F3F9FF"/>
+    </linearGradient>
+    <linearGradient id="badgeDoc" x1="104" y1="296" x2="358" y2="404" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5A9BFF"/>
+      <stop offset="1" stop-color="#2A6FDE"/>
+    </linearGradient>
+    <filter id="shadowDoc" x="110" y="74" width="292" height="350" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#245AA8" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+
+  <rect x="32" y="32" width="448" height="448" rx="84" fill="url(#bgDoc)"/>
+  <circle cx="118" cy="362" r="20" fill="#EFF8FF" fill-opacity="0.72"/>
+  <rect x="97" y="125" width="34" height="34" rx="12" transform="rotate(-20 97 125)" fill="#D9EEFF" fill-opacity="0.8"/>
+  <path d="M393 346L400 359L414 361L404 371L406 385L393 378L380 385L382 371L372 361L386 359L393 346Z" fill="#E4F3FF" fill-opacity="0.62"/>
+  <circle cx="390" cy="132" r="30" fill="#EFF8FF" fill-opacity="0.72"/>
+  <g filter="url(#shadowDoc)">
+    <path d="M140 108C140 94.7452 150.745 84 164 84H293.975C300.341 84 306.446 86.5286 310.946 91.0294L371.971 152.054C376.471 156.554 379 162.659 379 169.025V370C379 383.255 368.255 394 355 394H164C150.745 394 140 383.255 140 370V108Z" fill="url(#paperDoc)"/>
+    <path d="M302 84V142C302 155.255 312.745 166 326 166H379" fill="#D7ECFF"/>
+    <path d="M302 84V142C302 155.255 312.745 166 326 166H379" stroke="#B8D8FF" stroke-width="10" stroke-linejoin="round"/>
+    <path d="M178 188C178 179.163 185.163 172 194 172H324C332.837 172 340 179.163 340 188C340 196.837 332.837 204 324 204H194C185.163 204 178 196.837 178 188Z" fill="#DCEEFF"/>
+    <path d="M178 235C178 226.163 185.163 219 194 219H294C302.837 219 310 226.163 310 235C310 243.837 302.837 251 294 251H194C185.163 251 178 243.837 178 235Z" fill="#EAF5FF"/>
+    <rect x="154" y="296" width="204" height="94" rx="34" fill="url(#badgeDoc)"/>
+  </g>
+  <text x="256" y="359" text-anchor="middle" fill="white" font-family="Arial, 'Segoe UI', sans-serif" font-size="54" font-weight="700" letter-spacing="3">DOC</text>
+</svg>

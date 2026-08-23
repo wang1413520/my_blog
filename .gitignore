@@ -1,11 +1,15 @@
 # ========== 个人 / 环境敏感信息 ==========
 # Claude Code 本地配置（含本机路径、历史命令中的密码等）
 .claude/
+.agents/
+.glass-rollback/
 # IDEA 个人配置（JDK 路径、数据源连接等）
 .idea/
 *.iml
 *.iws
 *.ipr
+# 编辑器个人配置
+.vscode/
 
 # ========== 本地环境 / 密钥 ==========
 .env
@@ -21,6 +25,12 @@
 # ========== 构建产物 ==========
 target/
 **/target/
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+dist.zip
+**/dist.zip
 
 # ========== 日志 / 临时文件 ==========
 *.log
